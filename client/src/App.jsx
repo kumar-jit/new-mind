@@ -3,6 +3,7 @@ import "./App.css";
 import { Provider } from "react-redux";
 import { Store } from "./redux/store";
 import HomePage from "./pages/HomePage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     useEffect(() => {
@@ -46,6 +47,7 @@ function App() {
     }
     return (
         <Provider store={Store}>
+            <ToastContainer></ToastContainer>
             <HomePage></HomePage>
         </Provider>
     );
