@@ -50,19 +50,6 @@ const dirToastMiddleware = (store) => (next) => (action) => {
             toast.error(`Failed to load file: ${action.payload || "Unknown error"}`);
             break;
 
-        // Fetching folders
-        case "dir/fetchFolderById/rejected":
-            toast.error(`Failed to load folder: ${action.payload || "Unknown error"}`);
-            break;
-        case "dir/fetchRootFolderData/rejected":
-            toast.error(`Failed to load root folder: ${action.payload || "Unknown error"}`);
-            break;
-
-        // Fetching stats
-        case "dir/totalStats/rejected":
-            toast.error(`Failed to fetch stats: ${action.payload || "Unknown error"}`);
-            break;
-
         default:
             break;
     }
