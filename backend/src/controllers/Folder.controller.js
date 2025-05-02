@@ -123,48 +123,53 @@ export const updateFolderController = async (req, res, next) => {
 };
 export const getFolderContentsController = async (req, res, next) => {
     try {
-      const { path, folderId, sortBy, top, skip } = req.query;
-  
-      let folderObjectId = folderId;
-      let normalizedPath = path?.replace(/\/+$/, '');
-  
-      // Resolve folderId if only path is provided
-      if (!folderObjectId && normalizedPath) {
-        const folder = await findFolderByPathRepo(normalizedPath);
-        if (!folder) throw new ErrorHandler(404, 'Folder not found');
-        folderObjectId = folder._id;
-      }
-  
-      // Fallback to root folder if neither path nor folderId is provided
-      if (!folderObjectId && !normalizedPath) {
-        const root = await getRootFolderId();
-        if (!root || !root.id) throw new ErrorHandler(500, 'Root folder not initialized');
-        folderObjectId = root.id;
-      }
-  
-      const paginationOptions = {
-        limit: top ? parseInt(top) : undefined,
-        skip: skip ? parseInt(skip) : undefined,
-      };
-  
-      const result = await findUnifiedFolderContentsRepo(folderObjectId, sortBy, paginationOptions);
-      if (!result) throw new ErrorHandler(404, 'Folder not found');
-  
-      res.status(200).json({
-        success: true,
-        folder: {
-          _id: result.folderId,
-          name: result.folder.name,
-          path: result.folder.path,
-          createdAt: result.folder.createdAt,
-          updatedAt: result.folder.updatedAt,
-          contents: result.contents,
-        },
-      });
+        const { path, folderId, sortBy, top, skip } = req.query;
+
+        let folderObjectId = folderId;
+        let normalizedPath = path?.replace(/\/+$/, "");
+
+        // Resolve folderId if only path is provided
+        if (!folderObjectId && normalizedPath) {
+            const folder = await findFolderByPathRepo(normalizedPath);
+            if (!folder) throw new ErrorHandler(404, "Folder not found");
+            folderObjectId = folder._id;
+        }
+
+        // Fallback to root folder if neither path nor folderId is provided
+        if (!folderObjectId && !normalizedPath) {
+            const root = await getRootFolderId();
+            if (!root || !root.id)
+                throw new ErrorHandler(500, "Root folder not initialized");
+            folderObjectId = root.id;
+        }
+
+        const paginationOptions = {
+            limit: top ? parseInt(top) : undefined,
+            skip: skip ? parseInt(skip) : undefined,
+        };
+
+        const result = await findUnifiedFolderContentsRepo(
+            folderObjectId,
+            sortBy,
+            paginationOptions
+        );
+        if (!result) throw new ErrorHandler(404, "Folder not found");
+
+        res.status(200).json({
+            success: true,
+            folder: {
+                _id: result.folderId,
+                name: result.folder.name,
+                path: result.folder.path,
+                createdAt: result.folder.createdAt,
+                updatedAt: result.folder.updatedAt,
+                contents: result.contents,
+            },
+        });
     } catch (err) {
-      next(err);
+        next(err);
     }
-  };
+};
 
 export const deleteFolderController = async (req, res, next) => {
     const session = await mongoose.startSession();
@@ -174,7 +179,7 @@ export const deleteFolderController = async (req, res, next) => {
         const { folderId } = req.params;
 
         if (!folderId) {
-            throw new ErrorHandler(400, 'Folder ID is required');
+            throw new ErrorHandler(400, "Folder ID is required");
         }
 
         // Call repo to delete the folder and its children
@@ -184,7 +189,7 @@ export const deleteFolderController = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: `Folder with ID ${folderId} and its contents have been deleted successfully.`,
-            deletedFolder
+            deletedFolder,
         });
     } catch (err) {
         await session.abortTransaction();
@@ -196,9 +201,10 @@ export const deleteFolderController = async (req, res, next) => {
 
 export const getTotalStatsController = async (req, res, next) => {
     try {
-      const { totalFiles, totalFolders } = await getTotalFilesAndFoldersRepo();
-      res.status(200).json({ totalFiles, totalFolders });
+        const { totalFiles, totalFolders } =
+            await getTotalFilesAndFoldersRepo();
+        res.status(200).json({ totalFiles, totalFolders });
     } catch (error) {
-      next(error)
+        next(error);
     }
 };

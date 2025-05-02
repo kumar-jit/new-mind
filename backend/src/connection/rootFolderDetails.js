@@ -9,7 +9,7 @@ export const setRootFolderId = async () => {
             ROOT_FOLDER_Info = {
                 id: root._id.toString(),
                 name: root.name,
-                path: root.path
+                path: root.path,
             };
         }
     } catch (err) {
@@ -22,7 +22,8 @@ export const setRootFolderId = async () => {
 
 export const getRootFolderId = () => {
     if (ROOT_FOLDER_Info) return ROOT_FOLDER_Info;
-    const msg = "Root folder ID not initialized. Please restart the server after DB is ready.";
+    const msg =
+        "Root folder ID not initialized. Please restart the server after DB is ready.";
     console.warn(msg);
     throw new Error(msg);
 };

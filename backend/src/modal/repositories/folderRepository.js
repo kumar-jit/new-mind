@@ -1,4 +1,3 @@
-
 import Folder from "../schemas/Folder.schema.js";
 import File from "../schemas/File.schema.js";
 import { ErrorHandler } from "../../utils/error/customeError.js";
@@ -136,29 +135,29 @@ export const findUnifiedFolderContentsRepo = async (
 
 export const deleteFolderRepo = async (folderId, session) => {
     const folder = await Folder.findById(folderId).session(session);
-  
+
     if (!folder) {
-      throw new ErrorHandler(404, 'Folder not found');
+        throw new ErrorHandler(404, "Folder not found");
     }
-  
+
     // Recursively delete child folders
     for (let childFolderId of folder.childFolders) {
-      await deleteFolderRepo(childFolderId, session);
+        await deleteFolderRepo(childFolderId, session);
     }
-  
+
     // Fetch and delete files in the folder
     const files = await File.find({ folder: folderId }).session(session);
-  
+
     for (const file of files) {
-      await deleteFileRepo(file.fileId, session);               // GridFS delete
-      await deleteFileMetadataRepo(file._id, session);          // Metadata delete
+        await deleteFileRepo(file.fileId, session); // GridFS delete
+        await deleteFileMetadataRepo(file._id, session); // Metadata delete
     }
-  
+
     // Delete the folder itself
     await Folder.deleteOne({ _id: folder._id }).session(session);
-  
+
     return folder;
-  };
+};
 
 export const ensureRootFolderRepo = async () => {
     let root = await Folder.findOne({ path: "/root", parent: null });
@@ -176,23 +175,20 @@ export const ensureRootFolderRepo = async () => {
     return root;
 };
 
-
 export const searchFoldersRepo = async (filters, folderId, session) => {
     const { name, description, createdAfter, createdBefore } = filters;
 
-
     // Get all nested folder IDs from the root
-    // not using now 
+    // not using now
     // const folderIds = await getAllNestedFolderIds(folderId);
     // const filter = {
     //     _id: { $in: folderIds },
     // };
 
-    const filter = { };
-
+    const filter = {};
 
     if (name) {
-        filter.name = { $regex: new RegExp(name, "i") };  // Case-insensitive search for name
+        filter.name = { $regex: new RegExp(name, "i") }; // Case-insensitive search for name
     }
 
     if (description) {
@@ -204,7 +200,10 @@ export const searchFoldersRepo = async (filters, folderId, session) => {
     }
 
     if (createdBefore) {
-        filter.createdAt = { ...filter.createdAt, $lte: new Date(createdBefore) }; // Filter by created date before
+        filter.createdAt = {
+            ...filter.createdAt,
+            $lte: new Date(createdBefore),
+        }; // Filter by created date before
     }
 
     // Execute the query and return the folders that match the filter
@@ -214,15 +213,15 @@ export const searchFoldersRepo = async (filters, folderId, session) => {
         .lean(); // .lean() returns plain JavaScript objects instead of Mongoose documents
 };
 
-
-
 export const getAllNestedFolderIds = async (rootFolderId) => {
     const folderIds = [rootFolderId];
     const queue = [rootFolderId];
 
     while (queue.length > 0) {
         const currentId = queue.shift();
-        const children = await Folder.find({ parent: currentId }).select("_id").lean();
+        const children = await Folder.find({ parent: currentId })
+            .select("_id")
+            .lean();
 
         for (const child of children) {
             folderIds.push(child._id.toString());
@@ -233,11 +232,8 @@ export const getAllNestedFolderIds = async (rootFolderId) => {
     return folderIds;
 };
 
-
-
 export const getTotalFilesAndFoldersRepo = async () => {
     const totalFiles = await File.countDocuments();
     const totalFolders = await Folder.countDocuments();
     return { totalFiles, totalFolders };
-  };
-  
+};

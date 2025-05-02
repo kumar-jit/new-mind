@@ -1,10 +1,8 @@
+import mongoose from "mongoose";
 
-
-import mongoose from 'mongoose';
-
-const baseUrl = process.env.MONGODB || '0.0.0.0:27017';
-const dbName = process.env.DB_NAME || 'default';
-const bucketName = 'uploads';
+const baseUrl = process.env.MONGODB || "0.0.0.0:27017";
+const dbName = process.env.DB_NAME || "default";
+const bucketName = "uploads";
 const mongoUri = `mongodb://${baseUrl}/${dbName}?replicaSet=rs0`;
 
 let gfs = null;
@@ -20,12 +18,12 @@ export const connectUsingMongoose = async () => {
         const db = mongoose.connection.db;
 
         gfs = new mongoose.mongo.GridFSBucket(db, {
-            bucketName: bucketName
+            bucketName: bucketName,
         });
 
         console.log(`GridFS initialized with bucket: '${bucketName}'`);
     } catch (err) {
-        console.error('MongoDB connection failed:', err);
+        console.error("MongoDB connection failed:", err);
         throw err;
     }
 };
@@ -35,7 +33,9 @@ export const connectUsingMongoose = async () => {
  */
 export const getGridfsBucket = () => {
     if (!gfs) {
-        throw new Error('GridFS is not initialized. Make sure to call connectUsingMongoose() first.');
+        throw new Error(
+            "GridFS is not initialized. Make sure to call connectUsingMongoose() first."
+        );
     }
     return gfs;
 };

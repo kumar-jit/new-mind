@@ -70,7 +70,7 @@ export const updateFileNameOnlyRepo = async (
         {
             $set: {
                 filename: newFilename,
-                updatedAt: new Date()
+                updatedAt: new Date(),
             },
         },
         { new: true, session }
@@ -81,18 +81,18 @@ export const searchFilesRepo = async (filters, folderId, session) => {
     const { name, description, createdAfter, createdBefore } = filters;
 
     // Get all nested folder IDs from the root
-    // not using now 
+    // not using now
     // const folderIds = await getAllNestedFolderIds(folderId);
     // const filter = {
     //     _id: { $in: folderIds },
     // };
 
-    const filter = {  };
+    const filter = {};
 
     if (name) {
         filter.filename = { $regex: new RegExp(name, "i") }; // Case-insensitive search for filename
     }
-    
+
     if (description) {
         filter.description = { $regex: new RegExp(description, "i") }; // Case-insensitive search for description
     }
@@ -102,7 +102,10 @@ export const searchFilesRepo = async (filters, folderId, session) => {
     }
 
     if (createdBefore) {
-        filter.createdAt = { ...filter.createdAt, $lte: new Date(createdBefore) }; // Filter by created date before
+        filter.createdAt = {
+            ...filter.createdAt,
+            $lte: new Date(createdBefore),
+        }; // Filter by created date before
     }
 
     // Execute the query and return the files that match the filter
@@ -111,7 +114,6 @@ export const searchFilesRepo = async (filters, folderId, session) => {
         .session(session)
         .lean(); // .lean() returns plain JavaScript objects instead of Mongoose documents
 };
-
 
 export const getFileMetadataByIdRepo = async (fileId) => {
     return await File.findById(fileId).lean();

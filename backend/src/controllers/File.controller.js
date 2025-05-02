@@ -191,7 +191,7 @@ export const deleteFileController = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: `File "${file.filename}" deleted successfully from folder "${folder.name}".`,
-            deletedFile: file
+            deletedFile: file,
         });
     } catch (err) {
         await session.abortTransaction();
@@ -310,7 +310,6 @@ export const searchInFolderController = async (req, res, next) => {
     }
 };
 
-
 export const streamFileByIdController = async (req, res, next) => {
     try {
         const { fileId } = req.params;
@@ -336,7 +335,9 @@ export const streamFileByIdController = async (req, res, next) => {
 
         downloadStream.on("error", (err) => {
             console.error("Stream error:", err);
-            return next(new ErrorHandler(500, "Error reading file from GridFS."));
+            return next(
+                new ErrorHandler(500, "Error reading file from GridFS.")
+            );
         });
 
         downloadStream.pipe(res);
