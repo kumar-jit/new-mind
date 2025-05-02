@@ -326,7 +326,7 @@ export const TreeRowComponent = ({
                             ) : (
                                 <FaRegFile size={15} />
                             )}
-                            {node.name}
+                            {node.name}{node.type == "file" && node.extenstion && `.${node.extenstion}`}
                         </div>
                     </div>
                 </td>

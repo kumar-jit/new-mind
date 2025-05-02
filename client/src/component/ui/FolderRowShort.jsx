@@ -39,7 +39,7 @@ export const TreeShortRowComponent = ({
                     ) : (
                         <FaRegFile size={20} />
                     )}{" "}
-                    {node.name}
+                    {node.name}{node.type == "file" && node.extenstion && `.${node.extenstion}`}
                 </td>
                 <td
                     align="right"
