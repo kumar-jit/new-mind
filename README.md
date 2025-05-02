@@ -96,3 +96,15 @@ npm run dev
 chmod +x start.sh
 ./start.sh
 ```
+### 4. Screen Shot
+![image](https://github.com/user-attachments/assets/14588246-6a6b-468d-a404-0dbb4dca66a0)
+![image](https://github.com/user-attachments/assets/c29a741c-da75-42c9-a1bd-20688ee06ea7)
+![image](https://github.com/user-attachments/assets/773a0d1b-4a62-40b0-b8d0-707e285ab508)
+![image](https://github.com/user-attachments/assets/42088cf8-d46e-4928-ab95-1bc854204865)
+![image](https://github.com/user-attachments/assets/cfafcc06-69f6-47ea-8fbc-158a615e8c64)
+![image](https://github.com/user-attachments/assets/2f6f2619-95b9-447d-aad8-4a0b14d50dd1)
+
+
+
+
+
