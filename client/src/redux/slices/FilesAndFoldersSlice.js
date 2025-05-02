@@ -1,30 +1,29 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Base API URL from environment or fallback to localhost
 const hostUrl = import.meta.env.VITE_HOST_URL || "http://localhost:8000";
 
+// Initial state for the directory management slice
 const INITIAL_STATE = {
-    items: [], // Root level items
-    isLoading: false, // Loading state
-    error: null, // Error message
-    rootFolderInfo: null, // { _id, createdAt, name, path, updatedAt }
-    expandedFolders: {}, // { folderId: true/false }
-    folderData: {}, // { folderId: contents[] }
-    // Error message for folder creation
-    folderCreationState: {
+    items: [], // Root folder contents
+    isLoading: false, // Global loading flag
+    error: null, // Global error message
+    rootFolderInfo: null, // Metadata of the root folder
+    expandedFolders: {}, // Map to track expanded/collapsed folders
+    folderData: {}, // Cache of folder contents by folderId
+    folderCreationState: { // Folder creation status and errors
         folderCreationError: null,
         folderCreationDone: false,
     },
-    totalStats: {
+    totalStats: { // Global stats for files and folders
         totalFiles: 0,
-        totalFolders:0
+        totalFolders: 0
     },
-    fileView:{
-
-    }
+    fileView: {} // Placeholder for file view-specific state
 };
 
-// Thunk to fetch any folder's children (lazy load)
+// Fetch overall stats of files/folders from server
 export const getTotalStats = createAsyncThunk(
     "dir/totalStats",
     async (_, { rejectWithValue }) => {
@@ -39,7 +38,7 @@ export const getTotalStats = createAsyncThunk(
     }
 );
 
-// Thunk to fetch any folder's children (lazy load)
+// Fetch a specific file's data by ID
 export const viewFiles = createAsyncThunk(
     "dir/viewFiles",
     async (fileId, { rejectWithValue }) => {
@@ -54,7 +53,7 @@ export const viewFiles = createAsyncThunk(
     }
 );
 
-// Thunk to fetch any folder's children (lazy load)
+// Fetch contents and info of a folder by its ID
 export const fetchFolderById = createAsyncThunk(
     "dir/fetchFolderById",
     async (folderId, { rejectWithValue }) => {
@@ -76,6 +75,7 @@ export const fetchFolderById = createAsyncThunk(
     }
 );
 
+// Fetch root folder's contents
 export const fetchRootFolderData = createAsyncThunk(
     "dir/fetchRootFolderData",
     async (
@@ -98,9 +98,7 @@ export const fetchRootFolderData = createAsyncThunk(
 );
 
 /**
- * * Create a new folder in the current directory
- * @param {string} folderName - Name of the new folder
- * @param {string} parentId - ID of the parent folder
+ * Create a new folder under a parent folder
  */
 export const createNewFolder = createAsyncThunk(
     "dir/createNewFolder",
@@ -119,9 +117,7 @@ export const createNewFolder = createAsyncThunk(
 );
 
 /**
- * * update folder name
- * @param {string} folderName - new Name of the folder
- * @param {string} folderId - ID of the current folder
+ * Update folder name and description
  */
 export const updateFolderDetails = createAsyncThunk(
     "dir/updateFolder",
@@ -139,9 +135,7 @@ export const updateFolderDetails = createAsyncThunk(
 );
 
 /**
- * * update filename
- * @param {string} folderName - new Name of the file
- * @param {string} fileId - ID of the current folder
+ * Rename a file by file ID
  */
 export const updateFileName = createAsyncThunk(
     "dir/updatFile",
@@ -159,9 +153,7 @@ export const updateFileName = createAsyncThunk(
 );
 
 /**
- * * Delte folder
- * @param {string} folderName - new Name of the file
- * @param {string} fileId - ID of the current folder
+ * Delete a folder by folder ID
  */
 export const deleteFolder = createAsyncThunk(
     "dir/deleteFolder",
@@ -178,9 +170,7 @@ export const deleteFolder = createAsyncThunk(
 );
 
 /**
- * * Delte folder
- * @param {string} folderName - new Name of the file
- * @param {string} fileId - ID of the current folder
+ * Delete a file by file ID
  */
 export const deleteFile = createAsyncThunk(
     "dir/deleteFile",
@@ -196,19 +186,20 @@ export const deleteFile = createAsyncThunk(
     }
 );
 
-// export const deleteFolder
-
+// Redux slice for directory operations
 const DirSlice = createSlice({
     name: "dir",
     initialState: INITIAL_STATE,
     reducers: {
+        // Set root folder data and cache its contents
         setDirItems: (state, action) => {
             const { _id, createdAt, name, path, updatedAt, contents } =
                 action.payload;
             state.items = contents;
             state.rootFolderInfo = { _id, createdAt, name, path, updatedAt };
-            state.folderData[_id] = contents; // store contents in folderData
+            state.folderData[_id] = contents;
         },
+        // Toggle folder expand/collapse state
         toggleFolderExpand: (state, action) => {
             const folderId = action.payload;
             if (state.expandedFolders[folderId]) {
@@ -217,6 +208,7 @@ const DirSlice = createSlice({
                 state.expandedFolders[folderId] = true;
             }
         },
+        // Reset folder creation error
         resetFolderCreationError: (state, action) => {
             state.folderCreationState.folderCreationError = null;
         },
@@ -224,16 +216,9 @@ const DirSlice = createSlice({
     extraReducers: (builder) => {
         builder
 
-            //Load total stats
-            .addCase(getTotalStats.pending, (state) => {
-                // state.isLoading = true;
-            })
+            // Total stats - set data
             .addCase(getTotalStats.fulfilled, (state, action) => {
-                state.totalStats = {...action.payload};
-            })
-            .addCase(getTotalStats.rejected, (state, action) => {
-                // state.isLoading = false;
-                // state.error = action.payload || "Failed to fetch folder data";
+                state.totalStats = { ...action.payload };
             })
 
             // Fetch folder by ID
@@ -250,7 +235,7 @@ const DirSlice = createSlice({
                 state.error = action.payload || "Failed to fetch folder data";
             })
 
-            // Fetch root folder data
+            // Root folder loading
             .addCase(fetchRootFolderData.pending, (state) => {
                 state.isLoading = true;
             })
@@ -268,9 +253,8 @@ const DirSlice = createSlice({
                 state.folderCreationState.folderCreationError = null;
             })
             .addCase(createNewFolder.fulfilled, (state, action) => {
-                state.folderCreationState.folderCreationError = null;
                 state.folderCreationState.folderCreationDone = true;
-                state.totalStats.totalFolders = state.totalStats.totalFolders +1;
+                state.totalStats.totalFolders += 1;
                 const folderInfo = action.payload.folder;
                 if (folderInfo) {
                     const newFolder = {
@@ -283,9 +267,7 @@ const DirSlice = createSlice({
                     };
                     if (folderInfo.parent === state.rootFolderInfo._id)
                         state.items.push(newFolder);
-                    else {
-                        state.expandedFolders[folderInfo.parent] = false;
-                    }
+                    else state.expandedFolders[folderInfo.parent] = false;
                 }
             })
             .addCase(createNewFolder.rejected, (state, action) => {
@@ -293,12 +275,8 @@ const DirSlice = createSlice({
                     action.payload || "Failed to create folder";
             })
 
-            // on folder update
-            .addCase(updateFolderDetails.pending, (state) => {
-                state.folderCreationState.folderCreationError = null;
-            })
+            // Update folder
             .addCase(updateFolderDetails.fulfilled, (state, action) => {
-                state.folderCreationState.folderCreationError = null;
                 state.folderCreationState.folderCreationDone = true;
                 let updatedFolder = action.payload.folder;
                 for (let i = 0; i < state.items.length; i++) {
@@ -308,44 +286,25 @@ const DirSlice = createSlice({
                     }
                 }
             })
-            .addCase(updateFolderDetails.rejected, (state, action) => {
-                state.folderCreationState.folderCreationError =
-                    action.payload || "Failed to create folder";
-            })
 
-            // on delte folder
-            .addCase(deleteFolder.pending, (state) => {
-                state.folderCreationState.folderCreationError = null;
-            })
+            // Delete folder
             .addCase(deleteFolder.fulfilled, (state, action) => {
-                state.folderCreationState.folderCreationError = null;
                 state.folderCreationState.folderCreationDone = true;
-                state.totalStats.totalFolders = state.totalStats.totalFolders - 1;
+                state.totalStats.totalFolders -= 1;
                 let folderId = action.payload?.deletedFolder?._id;
                 let indexInItems = state.items.findIndex(
                     (item) => item._id == folderId
                 );
                 if (indexInItems >= 0) state.items.splice(indexInItems, 1);
-                if (state.expandedFolders[folderId])
-                    delete state.expandedFolders[folderId];
-                if (state.folderData[folderId])
-                    delete state.folderData[folderId];
-            })
-            .addCase(deleteFolder.rejected, (state, action) => {
-                // state.folderCreationState.folderCreationError =
-                //     action.payload || "Failed to create folder";
+                delete state.expandedFolders[folderId];
+                delete state.folderData[folderId];
             })
 
-            // update file
-            .addCase(updateFileName.pending, (state) => {
-                state.folderCreationState.folderCreationError = null;
-            })
+            // Update file name
             .addCase(updateFileName.fulfilled, (state, action) => {
-                state.folderCreationState.folderCreationError = null;
                 state.folderCreationState.folderCreationDone = true;
                 let updatedFile = action.payload.updatedFile;
                 let folderChildList = state.folderData[updatedFile.folder];
-                console.log(folderChildList);
                 for (let i = 0; i < folderChildList.length; i++) {
                     if (folderChildList[i]._id == updatedFile._id) {
                         folderChildList[i] = {
@@ -356,47 +315,31 @@ const DirSlice = createSlice({
                             _id: updatedFile.id,
                             extension: updatedFile.extension,
                         };
-                        folderChildList[i].type = "file";
                     }
                 }
             })
-            .addCase(updateFileName.rejected, (state, action) => {
-                state.folderCreationState.folderCreationError =
-                    action.payload || "Failed to create folder";
-            })
 
-            // on delte file
-            .addCase(deleteFile.pending, (state) => {
-                state.folderCreationState.folderCreationError = null;
-            })
+            // Delete file
             .addCase(deleteFile.fulfilled, (state, action) => {
-                state.folderCreationState.folderCreationError = null;
                 state.folderCreationState.folderCreationDone = true;
-                state.totalStats.totalFiles = state.totalStats.totalFiles - 1;
+                state.totalStats.totalFiles -= 1;
                 let deletedFile = action.payload.deletedFile;
                 let indexInItems = state.items.findIndex(
                     (item) => item._id == deletedFile._id
                 );
                 if (indexInItems >= 0) state.items.splice(indexInItems, 1);
-
-                if (
-                    state.expandedFolders[deletedFile.folder] &&
-                    state.folderData[deletedFile.folder]
-                ) {
-                    let ind = state.folderData[deletedFile.folder].findIndex(
+                let folderList = state.folderData[deletedFile.folder];
+                if (folderList) {
+                    let ind = folderList.findIndex(
                         (item) => item._id == deletedFile._id
                     );
-                    if (ind >= 0)
-                        state.folderData[deletedFile.folder].splice(ind, 1);
+                    if (ind >= 0) folderList.splice(ind, 1);
                 }
-            })
-            .addCase(deleteFile.rejected, (state, action) => {
-                // state.folderCreationState.folderCreationError =
-                //     action.payload || "Failed to create folder";
             });
     },
 });
 
+// Export actions and reducer
 export const { setDirItems, toggleFolderExpand, resetFolderCreationError } =
     DirSlice.actions;
 export const dirItemsReducers = DirSlice.reducer;

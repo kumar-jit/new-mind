@@ -1,73 +1,7 @@
-// import clsx from "clsx";
-// import { ShortThumbIcon, ShortThumbSubHead } from "./ThumbNail";
-// import { FaRegFolder } from "react-icons/fa";
-// import { Button, ButtonCircle } from "./Button";
-// export const FolderItemShort = ({ folderName, onClick, className, ref,level = 0 }) => {
-//     return (
-//         <div
-//             ref={ref}
-//             className={clsx("flex justify-space-between border-buttom border-color", className)}
-//             onClick={onClick}
-//             style={{
-//                 marginLeft: `${level * 5}px`,
-//                 padding: "10px 0px",
-//                 boxSizing: "border-box",
-//             }}
-//         >
-//             <div className="flex justify-start gap-2 items-center">
-//                 <ShortThumbIcon
-//                     children={<FaRegFolder size={20}></FaRegFolder>}
-//                 ></ShortThumbIcon>
-//                 <ShortThumbSubHead children={folderName}></ShortThumbSubHead>
-//             </div>
-//             <ButtonCircle> + </ButtonCircle>
-//         </div>
-//     );
-// };
-
-// import clsx from "clsx";
-// import { ShortThumbIcon, ShortThumbSubHead } from "./ThumbNail";
-// import { FaRegFolder, FaRegFile } from "react-icons/fa";
-// import { ButtonCircle } from "./Button";
-
-// export const FolderItemShort = ({
-//     folderName,
-//     type = "folder", // default to folder
-//     onClick,
-//     className,
-//     ref,
-//     level = 0,
-// }) => {
-//     const isFolder = type === "folder";
-
-//     return (
-//         <div
-//             ref={ref}
-//             className={clsx("flex justify-space-between border-buttom border-color", className)}
-//             onClick={onClick}
-//             style={{
-//                 marginLeft: `${level * 5}px`,
-//                 padding: "10px 0px",
-//                 boxSizing: "border-box",
-//             }}
-//         >
-//             <div className="flex justify-start gap-2 items-center">
-//                 <ShortThumbIcon>
-//                     {isFolder ? <FaRegFolder size={20} /> : <FaRegFile size={18} />}
-//                 </ShortThumbIcon>
-//                 <ShortThumbSubHead>{folderName}</ShortThumbSubHead>
-//             </div>
-
-//             {/* Only show "+" button for folders */}
-//             {isFolder && <ButtonCircle> + </ButtonCircle>}
-//         </div>
-//     );
-// };
-
 import clsx from "clsx";
 import { ShortThumbIcon, ShortThumbSubHead } from "./ThumbNail";
 import { FaRegFolder, FaRegFile } from "react-icons/fa";
-import { ButtonCircle } from "./Button";
+
 import { connect } from "react-redux"; // Import connect
 import {
     fetchFolderById,

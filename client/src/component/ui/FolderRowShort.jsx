@@ -47,16 +47,19 @@ export const TreeShortRowComponent = ({
                         "td-tree-row td-tree-padding-5 td-tree-border-buttom"
                     )}
                 >
-                    {node.type == "folder" ? <ButtonCircle
-                        className={
-                            expanded ? "backround-color-A9B5DF-yellow" : ""
-                        }
-                        onClick={() => toggleExpand(node._id)}
-                    >
-                        {" "}
-                        {expanded ? "-" : "+"}
-                    </ButtonCircle> :
-                    <Button ></Button>}
+                    {node.type == "folder" ? (
+                        <ButtonCircle
+                            className={
+                                expanded ? "backround-color-A9B5DF-yellow" : ""
+                            }
+                            onClick={() => toggleExpand(node._id)}
+                        >
+                            {" "}
+                            {expanded ? "-" : "+"}
+                        </ButtonCircle>
+                    ) : (
+                        <Button></Button>
+                    )}
                 </td>
             </tr>
 

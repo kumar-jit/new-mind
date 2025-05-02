@@ -1,7 +1,10 @@
+// React and utility imports
 import { useEffect, useState } from "react";
 import { convertDate } from "../../utils/dateConveter";
 import clsx from "clsx";
 import { connect } from "react-redux";
+
+// Redux actions
 import {
     createNewFolder,
     deleteFile,
@@ -11,6 +14,8 @@ import {
     updateFileName,
     updateFolderDetails,
 } from "../../redux/slices/FilesAndFoldersSlice";
+
+// UI components and icons
 import { Button } from "./Button";
 import {
     FaCaretDown,
@@ -28,36 +33,33 @@ import { FileViewModal } from "./FileViewModal";
 import UploadFile from "../FileExplorer/Forms/UploadFilesForms";
 import axios from "axios";
 
+// Main Tree Row component
 export const TreeRowComponent = ({
-    node,
-    level = 0,
-    toggleExpand,
-    fetchFolderData,
-    checkExpanded,
-    children,
+    node, // current file/folder node
+    level = 0, // tree level depth
+    toggleExpand, // toggles folder open/closed
+    fetchFolderData, // fetch children for a folder
+    checkExpanded, // check if folder is expanded
+    children, // children nodes
     createNewFolder,
     updateFolderDetails,
     updateFileName,
     deleteFolder,
-    deleteFile
+    deleteFile,
 }) => {
+    // Local UI state
     const [expanded, setExpanded] = useState(checkExpanded || false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // State to manage menu open/close
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const [createFormOpen, setCreateFormOpen] = useState(false); //create folder menu
+    const [createFormOpen, setCreateFormOpen] = useState(false);
+    const [editFormOpen, setEditFormOpen] = useState(false);
+    const [deleteFormOpen, setDeleteFormOpen] = useState(false);
+    const [editFileFormOpen, setEditeFileOpen] = useState(false);
+    const [deletFileFormOpen, setDeleteFileFormOpen] = useState(false);
+    const [viewFile, setViewFile] = useState(false);
+    const [uploadFile, setUploadFile] = useState(false);
 
-    const [editFormOpen, setEditFormOpen] = useState(false); // update folder menu
-
-    const [deleteFormOpen, setDeleteFormOpen] = useState(false); // detele form menu control
-
-    const [editFileFormOpen, setEditeFileOpen] = useState(false);   // edite file name control
-
-    const [deletFileFormOpen, setDeleteFileFormOpen] = useState(false);     // delete file control
-
-    const [viewFile, setViewFile] = useState(false);     // delete file control
-
-    const [uploadFile, setUploadFile] = useState(false);     // delete file control
-
+    // Folder-specific action menu
     const actionMenusForFolder = [
         {
             label: "Edit",
@@ -92,6 +94,8 @@ export const TreeRowComponent = ({
             },
         },
     ];
+
+    // File-specific action menu
     const actionMenusForFile = [
         {
             label: "Edit",
@@ -111,7 +115,7 @@ export const TreeRowComponent = ({
         },
     ];
 
-    // on folder creation
+    // Create new subfolder
     const onSubFolderCreation = (formRef) => {
         if (formRef.current) {
             const formData = new FormData(formRef.current);
@@ -125,7 +129,7 @@ export const TreeRowComponent = ({
         }
     };
 
-    // on folder update
+    // Update existing folder
     const onFolderUpdate = (formRef) => {
         if (formRef.current) {
             const formData = new FormData(formRef.current);
@@ -139,13 +143,13 @@ export const TreeRowComponent = ({
         }
     };
 
-    // on folder delte
+    // Delete folder
     const onFolderDelete = () => {
-        deleteFolder({folderId: node._id});
-        setDeleteFormOpen(false)
+        deleteFolder({ folderId: node._id });
+        setDeleteFormOpen(false);
     };
 
-    // on folder update
+    // Update file name
     const onFileNameUpdate = (formRef) => {
         if (formRef.current) {
             const formData = new FormData(formRef.current);
@@ -157,42 +161,45 @@ export const TreeRowComponent = ({
         }
     };
 
-     // on file delte
-     const onFileDelete = () => {
-        deleteFile({fileId: node._id});
-        setDeleteFileFormOpen(false)
+    // Delete file
+    const onFileDelete = () => {
+        deleteFile({ fileId: node._id });
+        setDeleteFileFormOpen(false);
     };
 
-    // on file upload
-    const onFileUpload = async (formRef, clientId="1234") => {
+    // Upload file(s) to folder
+    const onFileUpload = async (formRef, clientId = "1234") => {
         if (!formRef.current) return;
-    
+
         const formElement = formRef.current;
         const formData = new FormData();
-    
-        // Append all selected files
         const fileInput = formElement.querySelector('input[name="fileUpload"]');
         const files = fileInput.files;
-    
+
         if (!files.length) {
             alert("Please select at least one file.");
             return;
         }
-    
+
         for (let i = 0; i < files.length; i++) {
-            formData.append("files", files[i]); 
+            formData.append("files", files[i]);
         }
-        // Add folderId and clientId to form data
+
         formData.append("folderId", node._id);
-        formData.append("clientId", clientId); 
-        const hostUrl = import.meta.env.VITE_HOST_URL || "http://localhost:8000";
+        formData.append("clientId", clientId);
+
+        const hostUrl =
+            import.meta.env.VITE_HOST_URL || "http://localhost:8000";
+
         try {
-            const response = await axios.post(`${hostUrl}/api/v1/file/upload?`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-    
+            const response = await axios.post(
+                `${hostUrl}/api/v1/file/upload?`,
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+
             console.log(response);
         } catch (error) {
             console.error("Upload failed:", error);
@@ -200,26 +207,27 @@ export const TreeRowComponent = ({
         }
     };
 
-
+    // Sync local expanded state with Redux
     useEffect(() => {
         setExpanded(checkExpanded || false);
     }, [checkExpanded]);
 
+    // Fetch folder contents on mount
     useEffect(() => {
-        fetchFolderData(node._id); // Fetch folder data when the component mounts
+        fetchFolderData(node._id);
     }, []);
+
     return (
         <>
-            {/* create form modal  */}
+            {/* Modal components */}
             {createFormOpen && (
                 <CreateFolder
                     isOponed={createFormOpen}
                     setIsOpened={setCreateFormOpen}
                     onCreate={onSubFolderCreation}
-                ></CreateFolder>
+                />
             )}
 
-            {/* edite form modal  for folder */}
             {editFormOpen && (
                 <CreateFolder
                     isOponed={editFormOpen}
@@ -229,62 +237,62 @@ export const TreeRowComponent = ({
                         folderName: node.name,
                         folderDesc: node.description,
                     }}
-                ></CreateFolder>
+                />
             )}
 
-            {/* Delete form modal  for folder */}
             {deleteFormOpen && (
                 <ConfirmationForm
                     isOponed={deleteFormOpen}
                     setIsOpened={setDeleteFormOpen}
-                    title={"Delete Folder"}
+                    title="Delete Folder"
                     msg={`All subfolders and files under "${node.name}" will be deleted. Are you sure ?`}
-                    confirmBtn={{onClick: onFolderDelete}}
-                ></ConfirmationForm>
+                    confirmBtn={{ onClick: onFolderDelete }}
+                />
             )}
 
-            {/* edite form modal for file  */}
             {editFileFormOpen && (
                 <CreateFolder
                     isOponed={editFileFormOpen}
                     setIsOpened={setEditeFileOpen}
                     onCreate={onFileNameUpdate}
-                    editFileDefaultData={{
-                        fileName: node.name,
-                    }}
-                ></CreateFolder>
+                    editFileDefaultData={{ fileName: node.name }}
+                />
             )}
 
-            {/* Delte form modal  for file */}
             {deletFileFormOpen && (
                 <ConfirmationForm
                     isOponed={deletFileFormOpen}
                     setIsOpened={setDeleteFileFormOpen}
-                    title={"Delete File"}
+                    title="Delete File"
                     msg={`Are you want to delete the file "${node.name}" ?`}
-                    confirmBtn={{onClick: onFileDelete}}
-                ></ConfirmationForm>
+                    confirmBtn={{ onClick: onFileDelete }}
+                />
             )}
 
-            {/* upload file */}
             {uploadFile && (
                 <UploadFile
                     isOponed={uploadFile}
                     setIsOpened={setUploadFile}
-                    title={"Upload File"}
-                    confirmBtn={{onClick: onFileUpload}}
-                ></UploadFile>
+                    title="Upload File"
+                    confirmBtn={{ onClick: onFileUpload }}
+                />
             )}
 
-            {/* view file modal */}
-            {viewFile && node.type != "folder" && <FileViewModal isOpen={viewFile} onClose={() => setViewFile(false)} fileId={node._id}></FileViewModal>}
+            {viewFile && node.type !== "folder" && (
+                <FileViewModal
+                    isOpen={viewFile}
+                    onClose={() => setViewFile(false)}
+                    fileId={node._id}
+                />
+            )}
+
+            {/* Table row for file/folder */}
             <tr
                 className={clsx(
                     `${expanded && level == 0 ? "backround-color-expand" : ""}`,
                     level === 0 ? "tree-row-spacing" : ""
                 )}
-                style={{ boxsizing: "border-box" }}
-                
+                style={{ boxSizing: "border-box" }}
             >
                 <td
                     align="center"
@@ -295,34 +303,30 @@ export const TreeRowComponent = ({
                     style={{ paddingLeft: `${level * 20}px` }}
                 >
                     <div className="flex justify-space-between">
-                        {node.type == "folder" ? (
+                        {node.type === "folder" ? (
                             <Button onClick={() => toggleExpand(node._id)}>
-                                {" "}
                                 {expanded ? (
                                     <FaCaretDown size={15} />
                                 ) : (
                                     <FaCaretRight size={15} />
-                                )}{" "}
+                                )}
                             </Button>
                         ) : (
-                            <Button disabled> </Button>
+                            <Button disabled />
                         )}
-
                         <div
-                            className={clsx("flex justify-around")}
+                            className="flex justify-around"
                             style={{ width: "80%" }}
-                            onClick={() => {
-                                if(node.type != "folder")
-                                    setViewFile(true)
-                            }}
+                            onClick={() =>
+                                node.type !== "folder" && setViewFile(true)
+                            }
                         >
-                            {node.type == "folder" ? (
+                            {node.type === "folder" ? (
                                 <FaRegFolder size={15} />
                             ) : (
                                 <FaRegFile size={15} />
                             )}
                             {node.name}
-
                         </div>
                     </div>
                 </td>
@@ -366,17 +370,18 @@ export const TreeRowComponent = ({
                     {isMenuOpen && (
                         <ActionMenu
                             items={
-                                node.type == "folder"
+                                node.type === "folder"
                                     ? actionMenusForFolder
                                     : actionMenusForFile
                             }
                             position="left"
                             setOpen={setIsMenuOpen}
-                        ></ActionMenu>
+                        />
                     )}
                 </td>
             </tr>
 
+            {/* Render children recursively */}
             {expanded &&
                 children?.map((child) => (
                     <ConnectedTreeRow
@@ -389,6 +394,7 @@ export const TreeRowComponent = ({
     );
 };
 
+// Redux state mapping
 const mapStateToProps = (state, ownProps) => {
     const { node } = ownProps;
     return {
@@ -397,6 +403,7 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
+// Redux action mapping
 const mapDispatchToProps = (dispatch) => ({
     toggleExpand: (folderId) => dispatch(toggleFolderExpand(folderId)),
     fetchFolderData: (folderId) => dispatch(fetchFolderById(folderId)),
@@ -404,9 +411,10 @@ const mapDispatchToProps = (dispatch) => ({
     updateFolderDetails: (arg) => dispatch(updateFolderDetails(arg)),
     updateFileName: (arg) => dispatch(updateFileName(arg)),
     deleteFolder: (arg) => dispatch(deleteFolder(arg)),
-    deleteFile: (arg) => dispatch(deleteFile(arg))
+    deleteFile: (arg) => dispatch(deleteFile(arg)),
 });
 
+// Connect component to Redux
 const ConnectedTreeRow = connect(
     mapStateToProps,
     mapDispatchToProps

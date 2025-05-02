@@ -8,10 +8,16 @@ import { useEffect } from "react";
 import { getTotalStats } from "../../redux/slices/FilesAndFoldersSlice";
 
 const FileTable = (props) => {
-    const { fileTableShow, fileTableWidth, toggleFileTableShow, totalStats, getTotalStats } = props;
+    const {
+        fileTableShow,
+        fileTableWidth,
+        toggleFileTableShow,
+        totalStats,
+        getTotalStats,
+    } = props;
     useEffect(() => {
-        getTotalStats()
-    },[])
+        getTotalStats();
+    }, []);
     return (
         <div
             style={{
@@ -44,9 +50,7 @@ const FileTable = (props) => {
                         boxSizing: "border-box",
                     }}
                 >
-                    <TotalFoldersFilesInfo
-                        {...totalStats}
-                    />
+                    <TotalFoldersFilesInfo {...totalStats} />
                     <hr></hr>
                     <SidebarFolder></SidebarFolder>
                 </div>
@@ -59,14 +63,13 @@ const FileTable = (props) => {
 const mapStateToProps = (state) => ({
     fileTableShow: state.layoutReducer.fileTableShow,
     fileTableWidth: state.layoutReducer.fileTableWidth,
-    totalStats: state.dirItemsReducers.totalStats
-
+    totalStats: state.dirItemsReducers.totalStats,
 });
 
 // Mapping redux dispatch actions to component props
 const mapDispatchToProps = (dispatch) => ({
     toggleFileTableShow: () => dispatch(toggleFileTableShow()),
-    getTotalStats: () => dispatch(getTotalStats())
+    getTotalStats: () => dispatch(getTotalStats()),
 });
 
 // Connecting component to Redux store

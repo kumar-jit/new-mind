@@ -13,7 +13,13 @@ export const Button = ({ className, children, ref, style, ...props }) => {
     );
 };
 
-export const ButtonPrimary = ({ className, children, ref, style, ...props }) => {
+export const ButtonPrimary = ({
+    className,
+    children,
+    ref,
+    style,
+    ...props
+}) => {
     return (
         <button
             ref={ref}

@@ -11,20 +11,30 @@ import CreateFolder from "./Forms/CreateFolderForm";
 import { createNewFolder } from "../../redux/slices/FilesAndFoldersSlice";
 import { connect } from "react-redux";
 
-export const FileExploreHead = ({ className, children, ref, rootFolderInfo, createNewFolder }) => {
+export const FileExploreHead = ({
+    className,
+    children,
+    ref,
+    rootFolderInfo,
+    createNewFolder,
+}) => {
     const [mneuOpen, setMenuOpen] = useState(false);
     const [filterIsOpen, setFilterIsOpen] = useState(false);
     const [createFormOpen, setCreateFormOpen] = useState(false);
 
     const onFolderCreateUnderRoot = (formRef) => {
-        if(formRef.current){
+        if (formRef.current) {
             const formData = new FormData(formRef.current);
             const folderName = formData.get("folderName");
             const folderDesc = formData.get("folderDesc");
-            createNewFolder({ name: folderName, parentId: rootFolderInfo._id, description : folderDesc });
+            createNewFolder({
+                name: folderName,
+                parentId: rootFolderInfo._id,
+                description: folderDesc,
+            });
         }
         // createNewFolder({ folderName, parentId: rootFolderInfo._id });
-    }
+    };
 
     const menus = [
         {
@@ -60,9 +70,7 @@ export const FileExploreHead = ({ className, children, ref, rootFolderInfo, crea
                     paths={["NSM", "Folders & Documents"]}
                 ></FolderPathDisplay>
 
-
                 <div className="flex justify-start gap-2 items-center">
-
                     <ButtonPrimary
                         onClick={() => setFilterIsOpen(!filterIsOpen)}
                     >
@@ -87,11 +95,16 @@ export const FileExploreHead = ({ className, children, ref, rootFolderInfo, crea
                 </div>
             </div>
 
-            {createFormOpen && <CreateFolder isOponed={createFormOpen} setIsOpened={setCreateFormOpen} onCreate={onFolderCreateUnderRoot}></CreateFolder>}
+            {createFormOpen && (
+                <CreateFolder
+                    isOponed={createFormOpen}
+                    setIsOpened={setCreateFormOpen}
+                    onCreate={onFolderCreateUnderRoot}
+                ></CreateFolder>
+            )}
         </>
     );
 };
-
 
 // Mapping redux state to component props
 const mapStateToProps = (state) => {

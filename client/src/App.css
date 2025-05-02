@@ -1,6 +1,5 @@
-
 /* ------------------------------ button class ------------------------------ */
-.btn{
+.btn {
     margin: 0px;
     padding: 0px;
     border: none;
@@ -11,7 +10,7 @@
     font-weight: inherit;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #A9B5DF;
     color: white;
     padding: 10px 20px;
@@ -20,7 +19,8 @@
     font-weight: 500;
     transition: all 0.3s ease-in-out;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: #A9B5DF;
     color: white;
     padding: 10px 20px;
@@ -31,7 +31,7 @@
 }
 
 
-.btn-primary:disabled{
+.btn-primary:disabled {
     background-color: #A9B5DF;
     color: white;
     padding: 10px 20px;
@@ -41,16 +41,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.btn-secondary{
-    background-color: #A9B5DF;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 0.375rem;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease-in-out;
-}
-.btn-secondary:hover{
+.btn-secondary {
     background-color: #A9B5DF;
     color: white;
     padding: 10px 20px;
@@ -60,7 +51,17 @@
     transition: all 0.3s ease-in-out;
 }
 
-.btn-circle{
+.btn-secondary:hover {
+    background-color: #A9B5DF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-circle {
     background-color: #A9B5DF;
     color: white;
     width: 1.5rem;
@@ -72,7 +73,8 @@
     font-weight: 500;
     transition: all 0.3s ease-in-out;
 }
-.btn-circle:hover{
+
+.btn-circle:hover {
     background-color: #6c85de;
     color: white;
     transition: all 0.3s ease-in-out;
@@ -80,184 +82,228 @@
 
 /* -------------------------------- mainclass ------------------------------- */
 .flex {
-  display: flex;
-  position: relative;
+    display: flex;
+    position: relative;
 }
+
 .flex-col {
-  flex-direction: column;
+    flex-direction: column;
 }
-.items-center{
+
+.items-center {
     align-items: center;
 }
-.items-start{
+
+.items-start {
     align-items: flex-start;
 }
-.items-space-between{
+
+.items-space-between {
     align-items: space-between;
 }
-.items-end{
+
+.items-end {
     align-items: flex-end;
 }
-.items-stretch{
+
+.items-stretch {
     align-items: stretch;
 }
-.justify-center{
+
+.justify-center {
     justify-content: center;
 }
-.justify-start{
+
+.justify-start {
     justify-content: flex-start;
 }
-.justify-space-between{
+
+.justify-space-between {
     justify-content: space-between;
 }
-.justify-end{
+
+.justify-end {
     justify-content: flex-end;
 }
-.justify-around{
+
+.justify-around {
     justify-content: space-around;
 }
-.justify-evenly{
+
+.justify-evenly {
     justify-content: space-evenly;
 }
-.rounded-full{
+
+.rounded-full {
     border-radius: 9999px;
 }
-.rounded-md{
+
+.rounded-md {
     border-radius: 0.375rem;
 }
 
-.grow{
+.grow {
     flex-grow: 1;
 }
 
 /* ---------------------------------- flexgaps ---------------------------------- */
 
-.gap-2{
+.gap-2 {
     gap: 5px;
 }
 
 /* -------------------------------- positons -------------------------------- */
-.fixed{
+.fixed {
     position: fixed;
 }
 
 /* ------------------------------ Border class ------------------------------ */
-.border-buttom{
+.border-buttom {
     border-bottom: 1px solid;
 }
-.border-color{
+
+.border-color {
     border-color: #A9B5DF;
 }
 
 /* -------------------------------- marigine -------------------------------- */
-.margine-bottom-0{
+.margine-bottom-0 {
     margin-bottom: 0px;
 }
-.margine-bottom-0125{
+
+.margine-bottom-0125 {
     margin-bottom: 2.5px;
 }
-.margine-bottom-1{
+
+.margine-bottom-1 {
     margin-bottom: 5px;
 }
-.margine-bottom-2{
+
+.margine-bottom-2 {
     margin-bottom: 8px;
 }
-.margine-bottom-3{
+
+.margine-bottom-3 {
     margin-bottom: 10px;
 }
-.margine-bottom-4{
+
+.margine-bottom-4 {
     margin-bottom: 15px;
 }
-.margine-bottom-5{
+
+.margine-bottom-5 {
     margin-bottom: 20px;
 }
-.margine-bottom-6{
+
+.margine-bottom-6 {
     margin-bottom: 25px;
 }
+
 /* ------------------------------- text class ------------------------------- */
-.text-sm{
+.text-sm {
     font-size: 0.5rem;
 }
-.text-xl{
+
+.text-xl {
     font-size: 0.75rem;
 }
-.text-1x0l{
+
+.text-1x0l {
     font-size: 0.85rem;
 }
-.text-1x02{
+
+.text-1x02 {
     font-size: 0.95rem;
 }
-.text-1x025{
+
+.text-1x025 {
     font-size: 1rem;
 }
-.text-2xl{
+
+.text-2xl {
     font-size: 1.5rem;
 }
-.text-3xl{
+
+.text-3xl {
     font-size: 1.875rem;
 }
-.text-4xl{
+
+.text-4xl {
     font-size: 2.25rem;
 }
-.text-5xl{
+
+.text-5xl {
     font-size: 3rem;
 }
-.text-6xl{
+
+.text-6xl {
     font-size: 3.75rem;
 }
-.text-7xl{
+
+.text-7xl {
     font-size: 4.5rem;
 }
 
 
 
-.font-bold{
+.font-bold {
     font-weight: 700;
 }
-.font-semibold{
+
+.font-semibold {
     font-weight: 600;
 }
-.font-medium{
+
+.font-medium {
     font-weight: 500;
 }
-.font-normal{
+
+.font-normal {
     font-weight: 400;
 }
-.font-light{
+
+.font-light {
     font-weight: 300;
 }
-.font-thin{
+
+.font-thin {
     font-weight: 100;
 }
+
 /* ------------------------------- size class ------------------------------- */
-.icon-box-35{
+.icon-box-35 {
     width: 35px;
     height: 35px;
 }
-.icon-box-40{
+
+.icon-box-40 {
     width: 40px;
     height: 40px;
 }
-.icon-box-50{
+
+.icon-box-50 {
     width: 50px;
     height: 50px;
 }
 
 /* ------------------------------- color class ------------------------------ */
-.backround-color-A9B5DF{
+.backround-color-A9B5DF {
     background-color: #A9B5DF;
 }
-.backround-color-A9B5DF-30{
+
+.backround-color-A9B5DF-30 {
     background-color: rgba(169, 181, 223, 0.30);
 }
-.backround-color-A9B5DF-20{
+
+.backround-color-A9B5DF-20 {
     background-color: rgba(169, 181, 223, 0.20);
 }
-.backround-color-A9B5DF-yellow{
+
+.backround-color-A9B5DF-yellow {
     background-color: #F9C74F;
 }
 
-.backround-color-expand{
+.backround-color-expand {
     background-color: #e6e9f6;
 }
 
@@ -265,15 +311,19 @@
 .tree-table {
     border-collapse: collapse;
 }
+
 .tree-row-spacing {
-    border-top: 10px solid transparent; /* Adds space between rows */
-    border-bottom: 10px solid transparent; /* Adds space between rows */
+    border-top: 10px solid transparent;
+    /* Adds space between rows */
+    border-bottom: 10px solid transparent;
+    /* Adds space between rows */
 }
 
 .sidebar-tree-table {
     border-collapse: collapse;
 }
-.td-tree-row{
+
+.td-tree-row {
     padding: 0px;
     margin: 0px;
     border: none;
@@ -286,32 +336,39 @@
     box-sizing: border-box;
 }
 
-.td-inline{
+.td-inline {
     display: inline-block;
 }
-.td-border-radius-left-top{
+
+.td-border-radius-left-top {
     border-top-left-radius: 0.45rem;
 }
-.td-border-radius-right-top{
+
+.td-border-radius-right-top {
     border-top-right-radius: 0.45rem;
 }
-.td-border-radius-left-bottom{
+
+.td-border-radius-left-bottom {
     border-bottom-left-radius: 0.45rem;
 }
-.td-border-radius-right-bottom{
+
+.td-border-radius-right-bottom {
     border-bottom-right-radius: 0.45rem;
 }
-.td-tree-padding{
+
+.td-tree-padding {
     padding: 12px;
 }
-.td-tree-padding-5{
+
+.td-tree-padding-5 {
     padding: 10px;
 }
-.td-tree-border-buttom{
+
+.td-tree-border-buttom {
     border-bottom: 1px solid #A9B5DF;
 }
 
-.td-row-border{
+.td-row-border {
     border-bottom: 1px solid #6666667c;
 }
 
@@ -320,96 +377,100 @@
 .form-card {
     width: 100%;
     background: white;
-    border: 1px solid #e5e7eb; /* Light grey */
+    border: 1px solid #e5e7eb;
+    /* Light grey */
     border-radius: 10px;
-    
+
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-card-header {
+}
+
+.form-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
     padding: 16px;
-    border-bottom: 1px solid #e5e7eb; /* Light grey */
-  }
-  
-  .form-title {
+    border-bottom: 1px solid #e5e7eb;
+    /* Light grey */
+}
+
+.form-title {
     font-size: 1.1rem;
     font-weight: bold;
     margin: 0;
-  }
-  
-  .form-clear {
+}
+
+.form-clear {
     color: #ef4444;
     background: none;
     border: none;
     cursor: pointer;
     text-decoration: underline;
     font-size: 0.9rem;
-  }
-  
-  .form-form-content {
+}
+
+.form-form-content {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 0px 16px;
-    
-  }
-  .form-form-error-content{
+
+}
+
+.form-form-error-content {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 8px 16px 0px 16px;
     color: #ef4444;
     font-size: small;
-  }
-  
-  .form-form-content input,
-  .form-form-content textarea,
-  .form-form-content select {
+}
+
+.form-form-content input,
+.form-form-content textarea,
+.form-form-content select {
     padding: 10px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 0.95rem;
-  }
-  
-  .form-actions {
+}
+
+.form-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 20px;
     padding: 16px;
-    border-top: 1px solid #e5e7eb; /* Light grey */
-  }
-  
-  .form-btn {
+    border-top: 1px solid #e5e7eb;
+    /* Light grey */
+}
+
+.form-btn {
     padding: 8px 16px;
     border-radius: 8px;
     font-weight: 500;
     border: none;
     cursor: pointer;
-  }
-  
-  .form-btn-cancel {
+}
+
+.form-btn-cancel {
     background-color: #f3f4f6;
     color: #111827;
-  }
-  
-  .form-btn-cancel:hover {
+}
+
+.form-btn-cancel:hover {
     background-color: #e5e7eb;
-  }
-  
-  .form-btn-apply {
+}
+
+.form-btn-apply {
     background-color: #1e266d;
     color: white;
-  }
-  
-  .form-btn-apply:hover {
+}
+
+.form-btn-apply:hover {
     background-color: #111a4d;
-  }
-  
+}
+
 /* ------------------------------- form intput ------------------------------ */
 
 .form-group {
@@ -417,41 +478,42 @@
     flex-direction: column;
     gap: 0.5rem;
     box-sizing: border-box;
-  }
-  
-  .form-group label {
+}
+
+.form-group label {
     font-weight: 600;
     font-size: 1rem;
-  }
-  
-  .form-group input {
+}
+
+.form-group input {
     padding: 0.75rem 1rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
     color: #333;
     outline: none;
-  }
-  
-  .form-group input::placeholder {
+}
+
+.form-group input::placeholder {
     color: #999;
     font-weight: 500;
-  }
-  
-  /* Date input with icon */
-  .date-wrapper {
-    position: relative;
-  }
-  
-  .date-wrapper input {
-    width: 100%;
-    padding-right: 2.5rem; /* space for icon */
-    box-sizing: border-box;
-  }
-  
+}
 
-  /* ----------------------------- menu card class ---------------------------- */
-  .action-menu-container {
+/* Date input with icon */
+.date-wrapper {
+    position: relative;
+}
+
+.date-wrapper input {
+    width: 100%;
+    padding-right: 2.5rem;
+    /* space for icon */
+    box-sizing: border-box;
+}
+
+
+/* ----------------------------- menu card class ---------------------------- */
+.action-menu-container {
     position: absolute;
     z-index: 50;
     width: 200px;
@@ -462,23 +524,23 @@
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
-  }
-  
-  /* Default to bottom position */
-  .menu-bottom {
+}
+
+/* Default to bottom position */
+.menu-bottom {
     top: 100%;
     left: -50%;
     margin-top: 8px;
-  }
-  
-  /* Position to the left side of the button */
-  .menu-left {
+}
+
+/* Position to the left side of the button */
+.menu-left {
     top: 0;
     right: 100%;
     margin-right: 8px;
-  }
-  
-  .action-menu-item {
+}
+
+.action-menu-item {
     display: flex;
     align-items: center;
     padding: 12px 16px;
@@ -491,46 +553,46 @@
     width: 100%;
     text-align: left;
     transition: background 0.2s ease;
-  }
-  
-  .action-menu-item:hover {
+}
+
+.action-menu-item:hover {
     background-color: #f3f4f6;
-  }
-  
-  .action-menu-icon {
+}
+
+.action-menu-icon {
     font-size: 1.2rem;
     display: flex;
     align-items: center;
-  }
-  
-  .action-menu-label {
+}
+
+.action-menu-label {
     flex-grow: 1;
-  }
-  
-  /* ------------------------------- modal class ------------------------------ */
-  .modal-overlay {
+}
+
+/* ------------------------------- modal class ------------------------------ */
+.modal-overlay {
     position: fixed;
-    inset: 0; 
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem; 
+    padding: 1rem;
     z-index: 50;
-  }
+}
 
-  .modal-content {
+.modal-content {
     background: #ffffff00;
     width: 100%;
-    max-width: 448px; 
-    border-radius: 0.5rem; 
+    max-width: 448px;
+    border-radius: 0.5rem;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
+}
 
 
-  /* ----------------------------- File view moda ----------------------------- */
+/* ----------------------------- File view moda ----------------------------- */
 
-  .fileView-overlay {
+.fileView-overlay {
     position: fixed;
     inset: 0;
     z-index: 50;
@@ -539,18 +601,19 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    
-  }
-  
-  .fileView-modal {
+
+}
+
+.fileView-modal {
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     padding: 1.5rem;
     position: relative;
     width: 90vw;
     height: 90vh;
-  }
-  .fileView-close {
+}
+
+.fileView-close {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -559,26 +622,25 @@
     font-size: 1.5rem;
     cursor: pointer;
     color: red;
-  }
-  
-  .fileView-body {
+}
+
+.fileView-body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     width: 90vw;
     height: 90vh;
-  }
-  .fileView-body iframe {
+}
+
+.fileView-body iframe {
     width: 90vw;
     height: 90vh;
     border-radius: 6px;
     border: 1px solid #ddd;
-  }
-  
-  .fileView-description p {
+}
+
+.fileView-description p {
     font-size: 1rem;
     color: #333;
     line-height: 1.6;
-  }
-  
-  
+}
