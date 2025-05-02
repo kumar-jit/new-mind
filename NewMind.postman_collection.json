@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "73a43cbf-fa81-4d69-a578-3c915837c38d",
+		"name": "NewMind",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35175363"
+	},
+	"item": [
+		{
+			"name": "folders",
+			"item": [
+				{
+					"name": "create root folder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"folder 30\",\r\n  \"description\": \"Main folder for all project files\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/folder/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Sub folder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"sub4 folder 2\",\r\n  \"description\": \"sdf iles\",\r\n  \"parentId\": \"68141115532a0ebccf020aed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/folder/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update folder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"NewFolderName\",\r\n  \"description\":\"short desc\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/folder/68121955556e66084e8e4b39",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder",
+								"68121955556e66084e8e4b39"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete folder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/folder/6812773635704a2809795cbf",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder",
+								"6812773635704a2809795cbf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get content By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/folder/?folderId=68128a16ed4ac9efc26ad912",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder",
+								""
+							],
+							"query": [
+								{
+									"key": "folderId",
+									"value": "68128a16ed4ac9efc26ad912"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get content By path",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/folder?path=/root&top=5&skip=0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder"
+							],
+							"query": [
+								{
+									"key": "path",
+									"value": "/root"
+								},
+								{
+									"key": "top",
+									"value": "5"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "total files and folder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/folder/total",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"folder",
+								"total"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "sse connection setup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/file/events?clientId=12345",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"events"
+							],
+							"query": [
+								{
+									"key": "clientId",
+									"value": "12345"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/Kumar/Downloads/Kumarjit_Resume.pdf"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/Kumar/Downloads/1619429020214.jpg",
+									"disabled": true
+								},
+								{
+									"key": "folderId",
+									"value": "68128a16ed4ac9efc26ad912",
+									"type": "text"
+								},
+								{
+									"key": "clientId",
+									"value": "12345",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/Kumar/Downloads/73539193_2460137440975781_7487024081724768256_n-removebg-preview.png",
+									"disabled": true
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/Kumar/Downloads/8033c547-d874-4528-ab56-d2a9bbe12741_1.mp4",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/file/upload?clientId=12345",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"upload"
+							],
+							"query": [
+								{
+									"key": "clientId",
+									"value": "12345"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a file",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/file/6814e9aba12986722d54ddf0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"6814e9aba12986722d54ddf0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update file name",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newName\": \"Kumarjit_Resume\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/file/68128a38ed4ac9efc26ad93a",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"68128a38ed4ac9efc26ad93a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/file/search/68128a16ed4ac9efc26ad912?createdAfter=2022-01-01",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"search",
+								"68128a16ed4ac9efc26ad912"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "testDescription",
+									"disabled": true
+								},
+								{
+									"key": "createdAfter",
+									"value": "2022-01-01"
+								},
+								{
+									"key": "createdBefore",
+									"value": "2022-12-31",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "r",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/file/view/6814f3ac47cc80b947da9b06",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"file",
+								"view",
+								"6814f3ac47cc80b947da9b06"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		}
+	]
+}
